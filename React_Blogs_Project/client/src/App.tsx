@@ -5,7 +5,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import Main from './view/components/Main';
+import Home from './view/components/Home';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Main />}></Route>
+          <Route path='/' element={<Home />}></Route>
         </Routes>
       </BrowserRouter>
    
