@@ -1,94 +1,42 @@
-import React from 'react';
-import './App.css';
-import axios from 'axios';
-import Card from './view/pages/mentee/Card';
-// import Card from './view/pages/mentee/Card';
-import Profile from './view/pages/mentee/Profile';
+import { socket } from "./index";
+import Profile from "./view/pages/mentee/Profile";
+// import Card from "./view/pages/mentee/Card"//
+import SearchMentor from "./view/components/SearchMentor";
+import React from "react";
+import "./view/styles/global.scss";
+import HomePage from "./view/components/HomePage";
+import Matching from "./view/pages/matching/Matching";
+import Chat from "./view/pages/Chat/Chat";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Button from "./view/components/Button";
 
 function App() {
-
-  async function handleSubmit(ev: any) {
-    ev.preventDefault();
-    try {
-      const first = ev.target.first.value;
-      const last = ev.target.last.value;
-      const description = ev.target.description.value;
-      const image = ev.target.image.value;
-      const email = ev.target.email.value;
-      const country = ev.target.country.value;
-      const linkedInProfile = ev.target.linkedInProfile.value;
-      const phone = ev.target.phone.value;
-      const password = ev.target.password.value;
-      const profession = ev.target.profession.value;
-      const company = ev.target.company.value;
-      await axios.post('/api/users/add-user', {
-        first,
-        last,
-        description,
-        image,
-        email,
-        country,
-        linkedInProfile,
-        phone,
-        password,
-        profession
-      })
-      console.log(first, last)
-      // ev.target.reset()
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  const [mentorsList, setMentorsList] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
 
 
-  async function handleSubmitcomp(ev: any) {
-    ev.preventDefault();
-    try {
-      const id = ev.target.id.value;
-      const company = ev.target.company.value;
-      await axios.post('/api/companies/add-company', {
-        id,
-        company
-      })
-    } catch (error) {
-      console.error(error);
-    }
 
-  }
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get('/api/users/get-user')
+      const {user} = data
+      setCurrentUser(user)
+      console.log(user)
+    })();
+  }, [])
 
   return (
-    <>
-
-      <form onSubmit={handleSubmit}>
-        <input type="text" name='first' placeholder='first name' />
-        <input type="text" name='last' placeholder='last name' />
-        <input type="text" name='description' placeholder='description' />
-        <input type="text" name='image' placeholder='image' />
-        <input type="email" name='email' placeholder='E-mail' />
-        <input type="text" name='country' placeholder='country' />
-        <input type="link" name='linkedInProfile' placeholder='linkedIn Profile' />
-        <input type="text" name='phone' placeholder='phone number' />
-        <input type="text" name='password' placeholder='password' />
-        <input type="text" name='profession' placeholder='profession' />
-        <input type="submit" value='submit' />
-      </form>
-
-
-      <form onSubmit={handleSubmitcomp}>
-        <input type="text" name='id' placeholder='id' />
-        <input type="text" name='company' placeholder='company name' />
-        <input type="submit" value='submit' />
-      </form>
-
-
-      <Card />
-      {/* <Profile /> */}
-
-      {/* <Card/> */}
-      <Profile _id={"1234"} />
-
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path='/' element={<HomePage />}/>
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/matching" element={<Matching mentorsList={mentorsList} setMentorsList={setMentorsList} currentUser={currentUser} />} />
+        
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

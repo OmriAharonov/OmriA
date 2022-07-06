@@ -1,8 +1,32 @@
-import React from 'react'
+import axios from 'axios'
+import { useEffect } from 'react'
+import MatchingCard from './components/MatchingCards'
 
-const Matching = () => {
+interface MatchingProps {
+  mentorsList: any,
+  setMentorsList: Function
+  currentUser: any
+}
+
+const Matching = (props: MatchingProps) => {
+
+  const { mentorsList, setMentorsList, currentUser } = props
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.post('/api/users/get-mentors', { currentUser })
+      const { allMentors } = data
+      setMentorsList(allMentors)
+      console.log(currentUser)
+    })();
+  }, [currentUser])
+
+
   return (
-    <div>Matching</div>
+    <div>
+
+      <MatchingCard mentorsList={mentorsList} />
+
+    </div>
   )
 }
 

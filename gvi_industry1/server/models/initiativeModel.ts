@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 const NameSchema = new mongoose.Schema ({
     first: String,
     last: String
-  })
+  });
 
   
 const MenteeSchema = new mongoose.Schema({
@@ -35,9 +35,9 @@ export const InitiativeSchema = new mongoose.Schema({
     },
     WebSite:String,
     LinkToOnepager: String,
-    Presntations: [String]
+    Presntations: [{String}]
 
-    /////initative
+    /////initiative
     
 })
 const InitiativeModel = mongoose.model("initiatives",InitiativeSchema)
