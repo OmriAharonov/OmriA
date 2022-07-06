@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
-import UserSchema  from "./userModel";
+// import UserSchema from "./userModel";
+import userModel, { UserSchema } from './userModel';
 
 const selectedUserSchema = new mongoose.Schema({
   selectingUserId: {
     type: String,
     unique: true,
-    required: true,
+    required: true
   },
-//   selectedUsers: [UserSchema],
+  selectedUsers: [UserSchema]
 });
 
 const selectedUserModel = mongoose.model('selectedUsers', selectedUserSchema);
