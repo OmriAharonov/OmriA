@@ -17,8 +17,8 @@ const RegisterMentee = (props: RegisterMenteeProps) => {
         ev.preventDefault();
         console.dir(ev.target);
 
-        const first = ev.target.elements.firstName.value;
-        const last = ev.target.elements.lastName.value;
+        const firstName = ev.target.elements.firstName.value;
+        const lastName = ev.target.elements.lastName.value;
         const password = ev.target.elements.password.value;
         const email = ev.target.elements.email.value;
         const phone = ev.target.elements.phone.value;
@@ -33,8 +33,7 @@ const RegisterMentee = (props: RegisterMenteeProps) => {
         const description = ev.target.elements.description.value;
         const profilePic = ev.target.elements.profilePic.value;
 
-
-        const name = { first, last };
+        const name = { firstName, lastName };
 
         const user = { name,password,profilePic, description,linkdinProfile, email, country, phone, sector, stage }
         const initiative = { sector, companyName, description, stage, website, linkToOnePager, presentations }
@@ -81,7 +80,7 @@ const RegisterMentee = (props: RegisterMenteeProps) => {
                         </div>
                         <div className="inputBox">
                             <div className="form__text">Phone</div>
-                            <input type="text" name="phone" />
+                            <input type="tel" name="phone" />
                         </div>
                         <div className="inputBox">
                             <div className="form__text">LinkdIN profile</div>
