@@ -6,9 +6,9 @@ import MailOutlineTwoToneIcon from "@mui/icons-material/MailOutlineTwoTone";
 import PushPinRoundedIcon from "@mui/icons-material/PushPinRounded";
 import StarIcon from "@mui/icons-material/Star";
 import { Button } from "@mui/material";
-import "./style/card.scss";
+import "./style/selectedMentor.scss";
 
-const Card = () => {
+const SelectedMentor = () => {
   // function Card() {
   //   // useEffect(() => {
   //   //   (async () => {
@@ -16,10 +16,10 @@ const Card = () => {
   //   //     const {result}  = data;
   //   //     console.log(data);
 
-//   //   //     console.log(result[0].country);
+  //   //   //     console.log(result[0].country);
 
-//   //   })();
-//   // }, []);
+  //   //   })();
+  //   // }, []);
 
   const userDetails = {
     name: "artur yaski",
@@ -38,31 +38,56 @@ const Card = () => {
     profession: "Finance",
   };
 
-  return (
-    <div className="card">
-      <div className="card__photo">
-        <img src={`${userDetails.img}`} alt="" />
-      </div>
-      <div className="card__center">
-        <p className="card__name"> {userDetails.name}</p>
-        <div className="card__flex">
-          <img src={`${userDetails.country}`} alt="" />
-          <LinkedInIcon
-            className="card__flex__linkdIn"
-            style={{ fontSize: "30px" }}
-          >
-            {userDetails.linkedInProfile}
-          </LinkedInIcon>
-        </div>
+  async function handleSubmit(ev:any) {
+    ev.preventDefualt();
+    const firstName = ev.target.firstName.value;
+    const lastName = ev.target.lastName.value;
+    const email = ev.target.email.value;
+    const image = ev.target.image.value;
+    const password = ev.target.password.value;
+    const userType = ev.target.userType.value;
+    const country = ev.target.country.value;
+    const profession = ev.target.profession.value;
+    
+  }
 
-        <p className="card__company">{userDetails.companies}</p>
-        <p className="card__profession">{userDetails.profession}</p>
-      </div>
-      <div className="card__star">
-        <StarIcon></StarIcon>
-      </div>
-    </div>
+  return (
+    <>
+      <form onSubmit = {handleSubmit}>
+          <input type='text' name='firstName' placeholder='first name' />
+          <input type='text' name='lastName' placeholder='last name' />
+          <input type='email' name='email' placeholder='E-mail' />
+          <input type='text' name='image' placeholder='image' />
+          <input type='text' name='password' placeholder='password' />
+          <input type='text' name='userType' placeholder='user type' />
+          <input type='text' name='country' placeholder='country' />
+          <input type='text' name='profession' placeholder='profession' />
+      </form>
+    </>
+    // <div className="selectedMentor">
+    //   <div className="selectedMentor__photo">
+    //     <img src={`${userDetails.img}`} alt="" />
+    //   </div>
+    //   <div className="selectedMentor__center">
+    //     <p className="selectedMentor__name"> {userDetails.name}</p>
+    //     <div className="selectedMentor__flex">
+    //       <img src={`${userDetails.country}`} alt="" />
+    //       <LinkedInIcon
+    //         className="selectedMentor__flex__linkdIn"
+    //         style={{ fontSize: "30px" }}
+    //       >
+    //         {userDetails.linkedInProfile}
+    //       </LinkedInIcon>
+    //     </div>
+
+    //     <p className="selectedMentor__company">{userDetails.companies}</p>
+    //     <p className="selectedMentor__profession">{userDetails.profession}</p>
+    //   </div>
+    //   <div className="selectedMentor__star">
+    //     <StarIcon></StarIcon>
+    //   </div>
+    // </div>
   );
 };
 
-export default Card;
+export default SelectedMentor;
