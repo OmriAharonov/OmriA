@@ -3,6 +3,7 @@
 const secret = process.env.JWT_SECRET;
 import UserModel from "../models/userModel";
 import selectedUsersModel from "../models/selectedUsers";
+import initiativeModel from "../models/initiativeModel"
 import JWT from "jwt-simple";
 
 export const getMentors = async (req, res) => {
@@ -110,10 +111,16 @@ export async function getSelectingUser(req, res) {
 
 export async function getSelectedUserdata(req, res) {
   try {
-    const { _id } = req.body;
+    const { _id, type } = req.body;
     const users = await selectedUsersModel.find({})
     // console.log(users);
     const selectedUsers = users.filter((user) => user.selectingUserId === _id && user.selected === true);
+    if(type === 'mentee'){
+      const selectedMentors = await UserModel.find({});
+    }
+    else if(type === 'mentor'){
+      const selectedMentees = await initiativeModel.find({})
+    }
     res.send({ ok: true, selectedUsers })
   } catch (error) {
     console.log(error.error);
