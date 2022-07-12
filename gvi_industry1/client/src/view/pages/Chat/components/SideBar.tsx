@@ -1,28 +1,66 @@
-import {useId, useEffect} from 'react';
-import {InputBase} from '@mui/material';
-import {UserInterface} from '../Chat';
-
-import SearchUsersIcon from '../Icons/SearchUsers'
-import SideBarDivider from '../Icons/SideBarDivider'
+import { useId, useEffect, useState, useRef } from 'react';
+import { InputBase } from '@mui/material';
+import { UserInterface } from '../Chat';
+import SearchUsersIcon from '../Icons/SearchUsers';
+import SideBarDivider from '../Icons/SideBarDivider';
 import { socket } from '../../../../index';
 
+
 interface SideBarProps {
-    userList?: Array<UserInterface>;
-    getUserList: Function;
-    handleJoinRoom: Function;
+
+    userList: Array<any>;
+
+    setRecipient: Function;
+
 }
 
 function SideBar(props: SideBarProps) {
-    const {userList, getUserList, handleJoinRoom} = props;
-    useEffect(() => {
-        return ()  => { 
-            getUserList();
-        };
-    }, []);
+
+    const { userList, setRecipient } = props;
+
+    const [userListMap, setUserListMap] = useState(userList[0])
+
+    const [selectedRec, setSelectedRec] = useState<any>('')
+
+    // const SelectedRefs = useRef<HTMLLIElement>(null!);
+    const SelectedRefs: any = useRef([])
+    SelectedRefs.current = [];
+
     const id = useId();
 
-    
-    
+    useEffect(() => {
+        return (() => {
+            console.log('userlistmap sidebar' + userListMap)
+        })
+    }, [])
+
+    const addToRefs = (el: any) => {
+
+        if (el && !SelectedRefs.current.includes(el)) {
+            SelectedRefs.current.push(el)
+        }
+    }
+
+    useEffect(() => {
+
+        SelectedRefs.current.forEach((recipient: any) => {
+
+            if (recipient.classList.contains('selected')) {
+                recipient.classList.remove('selected')
+            }
+
+            if (selectedRec) {
+                if (selectedRec._id.$oid === recipient.id) {
+                    recipient.classList.add('selected')
+                }
+            }
+
+
+
+        });
+
+
+    }, [selectedRec])
 
     return (
         <div className='chat__sideBar'>
@@ -33,12 +71,22 @@ function SideBar(props: SideBarProps) {
                 </div>
             </div>
             <ul className='chat__sideBar__recipientsList'>
-
-                {userList ? (
-                    userList.map((user, i) => {
+                {userListMap ? (
+                    userListMap.map((user: any, i: any) => {
                         return (
-                            <li key={i} onClick={(ev) => handleJoinRoom(ev, user)}>
-                                <p>{user.fullName}</p>
+                            <li
+                                ref={addToRefs}
+                                key={i}
+                                id={user._id.$oid}
+                                className='recipient'
+                                onClick={() => {
+
+                                    setSelectedRec(user)
+                                    // setRecipient(user);
+                                    // setSelected()
+                                }}
+                            >
+                                <p >{user.userName.first} {user.userName.last}</p>
                             </li>
                         );
                     })
@@ -46,13 +94,7 @@ function SideBar(props: SideBarProps) {
                     <h1>userList</h1>
                 )}
             </ul>
-            <SideBarDivider/>
-            <ul className='chat__sideBar__Buttons'>
-                <li className='btn'>100Tasks</li>
-                <li className='btn'>Docs</li>
-                <li className='btn'>Records</li>
-                <li className='btn'>Home</li>
-            </ul>
+            {/* <SideBarDivider/> */}
         </div>
     );
 }
