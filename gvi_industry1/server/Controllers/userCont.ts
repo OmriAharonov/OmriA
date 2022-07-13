@@ -117,6 +117,12 @@ export async function getSelectedUserdata(req, res) {
     const selectedUsers = users.filter((user) => user.selectingUserId === _id && user.selected === true);
     if(type === 'mentee'){
       const selectedMentors = await UserModel.find({});
+      let mentors =[];
+      // selectedUsers.forEach((selectedUser) => {
+      //   // const mentor = selectedMentors.filter((selectedMentor) => selectedMentor.email === selectedUser[i].email)
+      //   console.log(selectedUser);
+      // })
+      
     }
     else if(type === 'mentor'){
       const selectedMentees = await initiativeModel.find({})
