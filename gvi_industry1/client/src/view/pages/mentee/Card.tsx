@@ -8,37 +8,40 @@ import StarIcon from "@mui/icons-material/Star";
 import { Button } from "@mui/material";
 import "./style/card.scss";
 
-interface Card {
+interface CardProps {
   selectedUsers: any;
 }
 
-const Card = (props: Card) => {
+const Card = (props: CardProps) => {
 
   const { selectedUsers } = props;
 
   return (
-
-    <div className="card" key={selectedUsers._id}>
-        {selectedUsers.map((selectedUser: any) =>
+    <>
+    {selectedUsers.map((selectedUser: any) =>
+        <div className="card" key={selectedUser[0]._id}>
           <div className="card__photo">
-            <img src={`${selectedUsers.image}`} alt="" />
+            <img src={`${selectedUser[0].image}`} alt="" />
           </div>
           <div className="card__center">
-            <p className="card__name"> {selectedUsers.name}</p>
+            {/*   */}
             <div className="card__flex">
-              <img src={`${selectedUsers.country}`} alt="" />
+              {/* <img src={`${selectedUser[0].country}`} alt="" /> */}
               <LinkedInIcon className="card__flex__linkdIn" style={{ fontSize: "30px" }} >
-                {selectedUsers.linkedInProfile}
+                {selectedUser[0].linkedInProfile}
               </LinkedInIcon>
             </div>
-            <p className="card__company">{selectedUsers.fieldsOfKnowledge}</p>
-            <p className="card__profession">{selectedUsers.sector}</p>
+            <p className="card__company">{selectedUser[0].fieldsOfKnowledge}</p>
+            <p className="card__profession">{selectedUser[0].sector}</p>
           </div>
           <div className="card__star">
             <StarIcon></StarIcon>
           </div>
-        )}
-    </div>
+
+        </div>
+      )
+    }
+    </>
   );
 };
 

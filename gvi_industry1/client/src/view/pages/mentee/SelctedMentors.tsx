@@ -14,7 +14,7 @@ const SelctedMentors = () => {
       const users = await axios.post('/api/users/get-selected-users', {_id, type});
       const {mentors} = users.data;
       console.log(mentors);
-      // setSelectingUserId(data);
+      setSelectedUser(mentors);
     })();
   }, []);
 
