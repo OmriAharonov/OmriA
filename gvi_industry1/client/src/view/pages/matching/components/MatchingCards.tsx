@@ -11,7 +11,6 @@ const MatchingCard = (props: MatchingCardProps) => {
     console.log(selectedUserId)
     const { data } = await axios.post("/api/users/selected-user" , {selectedUserId})
     console.log(data)
-    
   }
   return (
     <div>
