@@ -27,11 +27,11 @@ const SelctedMentors = () => {
       <h5 className="selectedPage__title">Selcted-Mentors</h5>
       <div className="selectedPage__wrapper">
         <Card />
+        {/* <Card />
         <Card />
         <Card />
         <Card />
-        <Card />
-        <Card />
+        <Card /> */}
       </div>
     </div>
   );

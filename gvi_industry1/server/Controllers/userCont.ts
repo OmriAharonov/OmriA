@@ -123,11 +123,15 @@ export async function getSelectedUser(req, res) {
         const mentor = selectedUesrData.filter((selectedMentor) => selectedMentor.email === selectedUser.selectedUser['email']);
         mentors.push(mentor);
       })
-      // console.log(mentors);
       res.send({ ok: true, mentors });
     }
     else if (type === 'mentor') {
-      
+      let mentees = [];
+      selectedUsers.forEach((selectedUser) => {
+        const mentee = selectedUesrData.filter((selectedMentor) => selectedMentor.email === selectedUser.selectedUser['email']);
+        mentees.push(mentee);
+      })
+      res.send({ ok: true, mentees });
     }
   } catch (error) {
     console.log(error.error);
