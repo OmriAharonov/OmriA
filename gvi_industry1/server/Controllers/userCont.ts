@@ -119,24 +119,25 @@ export async function getSelectedUser(req, res) {
     const selectedUserInitiatives = await initiativeModel.find({});
 
     if (type === 'mentee') {
-      let mentors = [];
+      let selected = [];
       selectedUsers.forEach((selectedUser, i) => {
         const mentor = selectedUesrModel.filter((selectedMentor) => selectedMentor.email === selectedUser.selectedUser['email']);
         const user =  mentor[0];
-        mentors.push(user);
+        selected.push(user);
       })
-      res.send({ ok: true, mentors });
+      res.send({ ok: true, selected });
     }
 
     else if (type === 'mentor') {
-      let mentees = [];
+      let selected = [];
       selectedUsers.forEach((selectedUser) => {
         const mentee = selectedUesrModel.filter((selectedMentee) => selectedMentee.email === selectedUser.selectedUser['email']);
         const user = mentee[0];
         // const menteeIntiative = selectedUserInitiatives.filter((selectedMentee) => selectedMentee.ownerUserId === user.id);
         console.log(mentee);
+        selected.push(user);
       })
-      res.send({ ok: true, mentees });
+      res.send({ ok: true, selected });
     }
 
   } catch (error) {
