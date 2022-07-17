@@ -23,7 +23,7 @@ const SelctedMentors = () => {
     <div className="selectedPage">
       <h5 className="selectedPage__title">Selcted-Mentors</h5>
       <div className="selectedPage__wrapper">
-        <Card  selectedUsers={selectedUsers}/>
+        {/* <Card  selectedUsers={selectedUsers}/> */}
         {/* <Card />
         <Card />
         <Card />

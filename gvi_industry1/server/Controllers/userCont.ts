@@ -131,8 +131,10 @@ export async function getSelectedUser(req, res) {
     else if (type === 'mentor') {
       let mentees = [];
       selectedUsers.forEach((selectedUser) => {
-        const mentee = selectedUesrModel.filter((selectedMentor) => selectedMentor.email === selectedUser.selectedUser['email']);
-        mentees.push(mentee);
+        const mentee = selectedUesrModel.filter((selectedMentee) => selectedMentee.email === selectedUser.selectedUser['email']);
+        const user = mentee[0];
+        // const menteeIntiative = selectedUserInitiatives.filter((selectedMentee) => selectedMentee.ownerUserId === user.id);
+        console.log(mentee);
       })
       res.send({ ok: true, mentees });
     }
