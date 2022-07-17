@@ -122,7 +122,7 @@ export async function getSelectedUser(req, res) {
       let selected = [];
       selectedUsers.forEach((selectedUser, i) => {
         const mentor = selectedUesrModel.filter((selectedMentor) => selectedMentor.email === selectedUser.selectedUser['email']);
-        const user =  mentor[0];
+        const user = mentor[0];
         selected.push(user);
       })
       res.send({ ok: true, selected });
@@ -133,8 +133,7 @@ export async function getSelectedUser(req, res) {
       selectedUsers.forEach((selectedUser) => {
         const mentee = selectedUesrModel.filter((selectedMentee) => selectedMentee.email === selectedUser.selectedUser['email']);
         const user = mentee[0];
-        // const menteeIntiative = selectedUserInitiatives.filter((selectedMentee) => selectedMentee.ownerUserId === user.id);
-        console.log(mentee);
+        const menteeIntiative = selectedUserInitiatives.filter((selectedMentee) => selectedMentee.ownerUserId === user.id);
         selected.push(user);
       })
       res.send({ ok: true, selected });
