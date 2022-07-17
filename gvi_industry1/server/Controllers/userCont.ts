@@ -134,6 +134,9 @@ export async function getSelectedUser(req, res) {
         const mentee = selectedUesrModel.filter((selectedMentee) => selectedMentee.email === selectedUser.selectedUser['email']);
         const user = mentee[0];
         const menteeIntiative = selectedUserInitiatives.filter((selectedMentee) => selectedMentee.ownerUserId === user.id);
+        const companyName = menteeIntiative[0].companyName;
+        const stage = menteeIntiative[0].stage;
+        console.log(companyName,stage);
         selected.push(user);
       })
       res.send({ ok: true, selected });
