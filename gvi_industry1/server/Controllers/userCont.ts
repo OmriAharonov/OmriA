@@ -122,21 +122,20 @@ export async function getSelectedUser(req, res) {
       let mentors = [];
       selectedUsers.forEach((selectedUser, i) => {
         const mentor = selectedUesrModel.filter((selectedMentor) => selectedMentor.email === selectedUser.selectedUser['email']);
-        // mentors.push(mentor);
         const user =  mentor[0];
         mentors.push(user);
       })
       res.send({ ok: true, mentors });
     }
 
-    // else if (type === 'mentor') {
-    //   let mentees = [];
-    //   selectedUsers.forEach((selectedUser) => {
-    //     const mentee = selectedUesrData.filter((selectedMentor) => selectedMentor.email === selectedUser.selectedUser['email']);
-    //     mentees.push(mentee);
-    //   })
-    //   res.send({ ok: true, mentees });
-    // }
+    else if (type === 'mentor') {
+      let mentees = [];
+      selectedUsers.forEach((selectedUser) => {
+        const mentee = selectedUesrModel.filter((selectedMentor) => selectedMentor.email === selectedUser.selectedUser['email']);
+        mentees.push(mentee);
+      })
+      res.send({ ok: true, mentees });
+    }
 
   } catch (error) {
     console.log(error.error);

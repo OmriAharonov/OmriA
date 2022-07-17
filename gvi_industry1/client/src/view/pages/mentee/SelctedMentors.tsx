@@ -13,7 +13,6 @@ const SelctedMentors = () => {
       const { _id, type } = data;
       const users = await axios.post('/api/users/get-selected-users', {_id, type});
       const {mentors} = users.data;
-      console.log(mentors);
       setSelectedUsers(mentors);
     })();
   }, []);
@@ -24,7 +23,7 @@ const SelctedMentors = () => {
     <div className="selectedPage">
       <h5 className="selectedPage__title">Selcted-Mentors</h5>
       <div className="selectedPage__wrapper">
-        {/* <Card  selectedUsers={selectedUsers}/> */}
+        <Card  selectedUsers={selectedUsers}/>
         {/* <Card />
         <Card />
         <Card />

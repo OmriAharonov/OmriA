@@ -21,18 +21,18 @@ const Card = (props: CardProps) => {
     {selectedUsers.map((selectedUser: any, i:any) =>
         <div className="card" key={i}>
           <div className="card__photo">
-            <img src={`${selectedUser[0].image}`} alt="" />
+            <img src={`${selectedUser.image}`} alt="" />
           </div>
           <div className="card__center">
-            {/*   */}
+            {/* <h2>{selectedUser.name}</h2> */}
             <div className="card__flex">
-              {/* <img src={`${selectedUser[0].country}`} alt="" /> */}
+              <img src={`${selectedUser.country}`} alt="" />
               <LinkedInIcon className="card__flex__linkdIn" style={{ fontSize: "30px" }} >
-                {selectedUser[0].linkedInProfile}
+                {selectedUser.linkedInProfile}
               </LinkedInIcon>
             </div>
-            <p className="card__company">{selectedUser[0].fieldsOfKnowledge}</p>
-            <p className="card__profession">{selectedUser[0].sector}</p>
+            <p className="card__company">{selectedUser.fieldsOfKnowledge}</p>
+            <p className="card__profession">{selectedUser.sector}</p>
           </div>
           <div className="card__star">
             <StarIcon></StarIcon>
