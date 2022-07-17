@@ -18,8 +18,8 @@ const Card = (props: CardProps) => {
 
   return (
     <>
-    {selectedUsers.map((selectedUser: any) =>
-        <div className="card" key={selectedUser[0]._id}>
+    {selectedUsers.map((selectedUser: any, i:any) =>
+        <div className="card" key={i}>
           <div className="card__photo">
             <img src={`${selectedUser[0].image}`} alt="" />
           </div>

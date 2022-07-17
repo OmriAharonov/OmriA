@@ -112,27 +112,32 @@ export async function getSelectingUser(req, res) {
 export async function getSelectedUser(req, res) {
   try {
     const { _id, type } = req.body;
+
     const selected = await selectedUsersModel.find({})
-    // console.log(users);
     const selectedUsers = selected.filter((user) => user.selectingUserId === _id && user.selected === true);
-    const selectedUesrData = await UserModel.find({});
+    const selectedUesrModel = await UserModel.find({});
     const selectedUserInitiatives = await initiativeModel.find({});
+
     if (type === 'mentee') {
       let mentors = [];
-      selectedUsers.forEach((selectedUser) => {
-        const mentor = selectedUesrData.filter((selectedMentor) => selectedMentor.email === selectedUser.selectedUser['email']);
-        mentors.push(mentor);
+      selectedUsers.forEach((selectedUser, i) => {
+        const mentor = selectedUesrModel.filter((selectedMentor) => selectedMentor.email === selectedUser.selectedUser['email']);
+        // mentors.push(mentor);
+        const user =  mentor[0];
+        mentors.push(user);
       })
       res.send({ ok: true, mentors });
     }
-    else if (type === 'mentor') {
-      let mentees = [];
-      selectedUsers.forEach((selectedUser) => {
-        const mentee = selectedUesrData.filter((selectedMentor) => selectedMentor.email === selectedUser.selectedUser['email']);
-        mentees.push(mentee);
-      })
-      res.send({ ok: true, mentees });
-    }
+
+    // else if (type === 'mentor') {
+    //   let mentees = [];
+    //   selectedUsers.forEach((selectedUser) => {
+    //     const mentee = selectedUesrData.filter((selectedMentor) => selectedMentor.email === selectedUser.selectedUser['email']);
+    //     mentees.push(mentee);
+    //   })
+    //   res.send({ ok: true, mentees });
+    // }
+
   } catch (error) {
     console.log(error.error);
     res.send({ error: error.message });
