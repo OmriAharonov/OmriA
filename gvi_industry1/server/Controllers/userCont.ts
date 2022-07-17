@@ -4,6 +4,7 @@ const secret = process.env.JWT_SECRET;
 import UserModel from "../models/userModel";
 import selectedUsersModel from "../models/selectedUsers";
 import initiativeModel from "../models/initiativeModel"
+import countryFlagModel from "../models/countryFlagModel";
 import JWT from "jwt-simple";
 
 export const getMentors = async (req, res) => {
@@ -134,9 +135,10 @@ export async function getSelectedUser(req, res) {
         const mentee = selectedUesrModel.filter((selectedMentee) => selectedMentee.email === selectedUser.selectedUser['email']);
         const user = mentee[0];
         const menteeIntiative = selectedUserInitiatives.filter((selectedMentee) => selectedMentee.ownerUserId === user.id);
-        const companyName = menteeIntiative[0].companyName;
-        const stage = menteeIntiative[0].stage;
-        console.log(companyName,stage);
+        // const companyName = menteeIntiative[0].companyName;
+        // const stage = menteeIntiative[0].stage;
+        // console.log(companyName,stage);
+        // console.log(companyName);
         selected.push(user);
       })
       res.send({ ok: true, selected });
@@ -240,6 +242,19 @@ export const addUser = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.send({ error: err.message, ok: false });
+  }
+}
+
+export async function addFlags(req, res) {
+  try {
+    const { countryName, countryFlag } = req.body
+    const newCountry = new countryFlagModel({countryName, countryFlag})
+    await newCountry.save();
+    res.send({ok:true,newCountry})
+
+  } catch (error) {
+    console.log(error.error);
+    res.send({ error: error.message });
   }
 }
 

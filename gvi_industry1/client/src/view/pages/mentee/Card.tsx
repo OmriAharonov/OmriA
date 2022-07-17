@@ -15,7 +15,6 @@ interface CardProps {
 const Card = (props: CardProps) => {
 
   const { selectedUsers } = props;
-  console.log(selectedUsers);
 
   return (
     <>
