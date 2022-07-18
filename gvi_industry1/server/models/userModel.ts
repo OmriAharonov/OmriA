@@ -8,31 +8,31 @@ export const NameSchema = new mongoose.Schema({
   last: String,
 });
 
-export enum FieldsOfKnowledgeSchema{
-  
-    
-    UX="ux",
-    DEVELOPMENT= "devlopment",
-   
- 
+export enum FieldsOfKnowledgeSchema {
+
+
+  UX = "ux",
+  DEVELOPMENT = "devlopment",
+
+
 }
 
 
-export enum StageSchema{
-  FFF="fff",
-  PRE_SEED="pre-seed",
-  SEED="seed",
-  ROUND_A="round A",
-  ROUND_B_AND_ABOVE="round b and above",
+export enum StageSchema {
+  FFF = "fff",
+  PRE_SEED = "pre-seed",
+  SEED = "seed",
+  ROUND_A = "round A",
+  ROUND_B_AND_ABOVE = "round b and above",
 }
 
-export enum UserTypeSchema{
-  MENTEE="mentee",
-  ADMIN="admin",
-  MENTOR="mentor"
+export enum UserTypeSchema {
+  MENTEE = "mentee",
+  ADMIN = "admin",
+  MENTOR = "mentor"
 }
 
-export enum Sector{
+export enum Sector {
   EDUCATION = 'education',
   DIGIATL_HEALTH = "digital-health"
 }
@@ -48,6 +48,7 @@ export const UserSchema = new mongoose.Schema({
     required: true,
   },
   country: String,
+  // countryFlag: String,
   lastEntry: Date,
   linkedInProfile: String,
   phone: String,
@@ -55,10 +56,10 @@ export const UserSchema = new mongoose.Schema({
   password: String,
   type: {
     type: String,
-    enum:  UserTypeSchema,
-    default:  UserTypeSchema.MENTEE,
+    enum: UserTypeSchema,
+    default: UserTypeSchema.MENTEE,
   },
-  mentees:[{ String }],
+  mentees: [{ String }],
   fieldsOfKnowledge: {
     type: String,
     enum: FieldsOfKnowledgeSchema,

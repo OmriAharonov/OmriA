@@ -118,12 +118,15 @@ export async function getSelectedUser(req, res) {
     const selectedUsers = selected.filter((user) => user.selectingUserId === _id && user.selected === true);
     const selectedUesrModel = await UserModel.find({});
     const selectedUserInitiatives = await initiativeModel.find({});
+    const flags = await countryFlagModel.find({});
 
     if (type === 'mentee') {
       let selected = [];
       selectedUsers.forEach((selectedUser, i) => {
         const mentor = selectedUesrModel.filter((selectedMentor) => selectedMentor.email === selectedUser.selectedUser['email']);
         const user = mentor[0];
+        // const country = flags.filter((country) => country.countryName === user.country);
+        console.log(flags);
         selected.push(user);
       })
       res.send({ ok: true, selected });
@@ -133,7 +136,11 @@ export async function getSelectedUser(req, res) {
       let selected = [];
       selectedUsers.forEach((selectedUser) => {
         const mentee = selectedUesrModel.filter((selectedMentee) => selectedMentee.email === selectedUser.selectedUser['email']);
-        const user = mentee[0];
+        let user = mentee[0];
+        const country = flags.filter((country) => country.countryName === user.country);
+        const flag = { countryFlag: `${country[0].countryFlag}` };
+        Object.assign(user, flag);
+        console.log(user);
         const menteeIntiative = selectedUserInitiatives.filter((selectedMentee) => selectedMentee.ownerUserId === user.id);
         // const companyName = menteeIntiative[0].companyName;
         // const stage = menteeIntiative[0].stage;
@@ -248,9 +255,9 @@ export const addUser = async (req, res) => {
 export async function addFlags(req, res) {
   try {
     const { countryName, countryFlag } = req.body
-    const newCountry = new countryFlagModel({countryName, countryFlag})
+    const newCountry = new countryFlagModel({ countryName, countryFlag })
     await newCountry.save();
-    res.send({ok:true,newCountry})
+    res.send({ ok: true, newCountry })
 
   } catch (error) {
     console.log(error.error);

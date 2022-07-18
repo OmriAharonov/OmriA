@@ -26,7 +26,7 @@ const Card = (props: CardProps) => {
           <div className="card__center">
             {/* <h2>{selectedUser.name}</h2> */}
             <div className="card__flex">
-              {/* <img src={`${selectedUser.country}`}  /> */}
+              <img src={`${selectedUser.countryFlag}`}  />
               <LinkedInIcon className="card__flex__linkdIn" style={{ fontSize: "30px" }} >
                 {/* {selectedUser.linkedInProfile} */}
               </LinkedInIcon>
