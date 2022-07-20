@@ -47,7 +47,7 @@ export const getUsers = async (req, res) => {
 export const getFilter = async (req, res) => {
   try {
     const allFiltered = await UserModel.find({}).select('sector').distinct('sector');
-    
+
     res.json({ allFiltered, ok: true });
     console.log("filtered: " + allFiltered);
 
@@ -152,7 +152,7 @@ export async function getSelectedUser(req, res) {
 
     const selected = await selectedUsersModel.find({});
     const selectedUsers = selected.filter(
-       (user) => user.selectingUserId === _id && user.selected === true);
+      (user) => user.selectingUserId === _id && user.selected === true);
     const selectedUesrModel = await UserModel.find({});
     const selectedUserInitiatives = await initiativeModel.find({});
     const flags = await countryFlagModel.find({});
@@ -164,10 +164,14 @@ export async function getSelectedUser(req, res) {
           (selectedMentor) =>
             selectedMentor.email === selectedUser.selectedUser["email"]
         );
-        const user = mentor[0];
-        // const country = flags.filter((country) => country.countryName === user.country);
-        console.log(flags);
-        selected.push(user);
+        let user = mentor[0];
+        const country = flags.filter(
+          (country) => country.countryName === user.country
+        );
+          const newUser = {...user,flag:`${country[0].countryFlag}`}
+
+        console.log(newUser);
+        selected.push(newUser);
       });
       res.send({ ok: true, selected });
     } else if (type === "mentor") {
@@ -182,7 +186,6 @@ export async function getSelectedUser(req, res) {
           (country) => country.countryName === user.country
         );
         const flag = { countryFlag: `${country[0].countryFlag}` };
-        Object.assign(user, flag);
         console.log(user);
         const menteeIntiative = selectedUserInitiatives.filter(
           (selectedMentee) => selectedMentee.ownerUserId === user.id
@@ -287,7 +290,7 @@ export const addUser = async (req, res) => {
     const { user } = req.body;
     console.log(user);
 
-   
+
     const userFound: any = await UserModel.findOne({ email: user.email });
 
     if (userFound) {
