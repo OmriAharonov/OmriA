@@ -10,7 +10,7 @@ const HomePage = () => {
   const [countryArray, setCountryArray] = useState([]);
   const [menteeWindow, setMenteeWindow] = useState(false)
   const [mentorWindow, setMentorWindow] = useState(false)
-
+  const [thirdSection, setThirdSection] = useState('showThirdSection-none')
   const [secondSection, setSecondSection] = useState('showSecondSection-none')
   const [firstSection, setFirstSection] = useState('')
   const [showProgressBar, setShowProgressBar] = useState('')
@@ -21,9 +21,18 @@ const HomePage = () => {
     setSecondSection('showSecondSection-block')
     setFirstSection('showFirstSectionSection-none')
   }
+  function handleToggleShowThirdSection() {
+    setSecondSection('showSecondSection-none')
+    setThirdSection('showThirdSection-block')
+  }
   function handleBackToggleShowSections() {
     setSecondSection('showSecondSection-none')
     setFirstSection('showFirstSectionSection-block')
+  }
+  function handleBackToggleShowThirdSection() {
+    setThirdSection('showThirdSection-none')
+    setSecondSection('showSecondSection-block')
+    
   }
   function handleBackToSelection() {
     setRegisterWindow(true)
@@ -51,7 +60,7 @@ const HomePage = () => {
     <div className='homeContainer'>
 
       <div className='welcomeText'>
-        <div className='logo'><img src="/gvi-logo.png" alt="logo" /></div>
+        <div className='logo'><img src="./gvi-logo.png" alt="logo" /></div>
         <div className='text-btn-wrapper'>
           <div >
             <h1>Welcome to GVI</h1>
@@ -67,12 +76,12 @@ const HomePage = () => {
       </div>
 
       <div className='videoWindow'>
-        <img src="/video.png" alt="" />
+        <img src="./video.png" alt="" />
       </div>
       <Login loginWindow={loginWindow} setLoginWindow={setLoginWindow} />
       <UserSelection registerWindow={registerWindow} setRegisterWindow={setRegisterWindow} menteeWindow={menteeWindow} setMenteeWindow={setMenteeWindow} mentorWindow={mentorWindow} setMentorWindow={setMentorWindow} />
-      <RegisterMentee registerWindow={registerWindow} setRegisterWindow={setRegisterWindow} menteeWindow={menteeWindow} setMenteeWindow={setMenteeWindow} countryArray={countryArray} handleCloseRegisterWindow={handleCloseRegisterWindow} secondSection={secondSection} firstSection={firstSection} showProgressBar={showProgressBar} handleToggleShowSections={handleToggleShowSections} handleBackToggleShowSections={handleBackToggleShowSections} handleBackToSelection={handleBackToSelection} />
-      <RegisterMentor countryArray={countryArray} registerWindow={registerWindow} setRegisterWindow={setRegisterWindow} mentorWindow={mentorWindow} setMenteeWindow={setMenteeWindow} handleCloseRegisterWindow={handleCloseRegisterWindow} secondSection={secondSection} firstSection={firstSection} showProgressBar={showProgressBar} handleToggleShowSections={handleToggleShowSections} handleBackToggleShowSections={handleBackToggleShowSections} handleBackToSelection={handleBackToSelection} />
+      <RegisterMentee registerWindow={registerWindow} setRegisterWindow={setRegisterWindow} menteeWindow={menteeWindow} setMenteeWindow={setMenteeWindow} countryArray={countryArray} handleCloseRegisterWindow={handleCloseRegisterWindow} secondSection={secondSection} firstSection={firstSection} thirdSection={thirdSection} showProgressBar={showProgressBar} handleToggleShowSections={handleToggleShowSections} handleBackToggleShowSections={handleBackToggleShowSections} handleBackToSelection={handleBackToSelection} handleToggleShowThirdSection={handleToggleShowThirdSection} handleBackToggleShowThirdSection={handleBackToggleShowThirdSection}/>
+      <RegisterMentor countryArray={countryArray} registerWindow={registerWindow} setRegisterWindow={setRegisterWindow} mentorWindow={mentorWindow} setMenteeWindow={setMenteeWindow} handleCloseRegisterWindow={handleCloseRegisterWindow} secondSection={secondSection} firstSection={firstSection}  thirdSection={thirdSection} showProgressBar={showProgressBar} handleToggleShowSections={handleToggleShowSections} handleBackToggleShowSections={handleBackToggleShowSections} handleBackToSelection={handleBackToSelection} handleToggleShowThirdSection={handleToggleShowThirdSection} handleBackToggleShowThirdSection={handleBackToggleShowThirdSection}/>
       {/* <div className='feed'>
 
         <div className='feed__news' id="news"> news</div>

@@ -3,39 +3,70 @@ import { useEffect } from "react";
 import MatchingCard from "./components/MatchingCards";
 import FilterMenu from "./components/FilterMenu";
 import Search from "./components/Search";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface MatchingProps {
-  mentorsList: any;
-  setMentorsList: Function;
+  usersList: any;
+  setUsersList: Function;
   currentUser: any;
+  currentSearch: any;
+  setCurrentSearch: Function;
+  checked: any;
+  setChecked: Function;
 }
 
 const Matching = (props: MatchingProps) => {
-  const { mentorsList, setMentorsList, currentUser } = props;
-  useEffect(() => {
-    (async () => {
-      const { data } = await axios.post("/api/users/get-mentors", {currentUser});
+  const {
+    usersList,
+    setUsersList,
+    currentUser,
+    currentSearch,
+    setCurrentSearch,
+    checked,
+    setChecked,
+  } = props;
 
-      const { allMentors } = data;
-      setMentorsList(allMentors);
-      console.log(currentUser);
+  useEffect(() => {    
+    (async () => {
+      try {
+        console.log(currentUser,"get mentors2");
+        if (Object.keys(currentUser).length === 0)
+          throw new Error("User is not logged in");
+          
+        console.log("get mentors");
+        const { data } = await axios.post("/api/users/get-users", {
+          currentUser,
+        });
+
+        const { filterUsers } = data;
+        setUsersList(filterUsers);
+        console.log(filterUsers);
+      } catch (err) {
+        console.error(err);
+      }
     })();
-  }, []);
-//   const userid:any =  `{currentUser._id} `
-//  let  userId  = useParams();
+
+  }, [currentUser]);
+
+  //   const userid:any =  `{currentUser._id} `
+  //  let  userId  = useParams();
 
   //  function handleSelectedUserId(currentUser:any){
-  //     // console.log(currentUser)
   //  }
 
   return (
-    <div className="matching">
+    //<div className={matching?"matching showMatching":"dontShowMatching"}>
+    <div className="matching ">
       <Link to="/selected-mentors">Selected-mentors</Link>
-      <Search />
-      <MatchingCard mentorsList={mentorsList} />
-      <FilterMenu />
-      <Outlet />
+      <Search
+        currentSearch={currentSearch}
+        setCurrentSearch={setCurrentSearch}
+      />
+      <FilterMenu checked={checked} setChecked={setChecked} />
+
+      <MatchingCard usersList={usersList} />
+
+      
     </div>
   );
 };

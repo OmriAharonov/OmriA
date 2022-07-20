@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 
 export const countryFlagSchema = new mongoose.Schema({
-    countryName:'string',
-    countryFlag: 'string'
+    countryName:String,
+    countryFlag: String
 })
 
 const countryFlagModel = mongoose.model("flags", countryFlagSchema)
