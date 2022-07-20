@@ -19,7 +19,6 @@ interface CardProps {
 const Card = (props: CardProps) => {
 
   const { selectedUsers } = props;
-  console.log(selectedUsers)
 
   return (
     <>
@@ -29,7 +28,7 @@ const Card = (props: CardProps) => {
             {selectedUser.image ? <img src={`${selectedUser.image}`} />: <img src={'https://www.pngitem.com/pimgs/m/504-5040528_empty-profile-picture-png-transparent-png.png'} />}
           </div>
           <div className="card__center">
-            {/* <h2>{selectedUser.name}</h2> */}
+            <p>{selectedUser['name']['first']} {selectedUser['name']['last']}</p>
             <div className="card__flex">
               <img src={`${selectedUser.country}`}  />
               <LinkedInIcon className="card__flex__linkdIn" style={{ fontSize: "30px" }} >

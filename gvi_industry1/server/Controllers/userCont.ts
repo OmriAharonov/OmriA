@@ -168,14 +168,15 @@ export async function getSelectedUser(req, res) {
         const country = flags.filter(
           (country) => country.countryName === user.country
         );
-          // const newUser = {...user,flag:`${country[0].countryFlag}`}
-          user['country'] = `${country[0].countryFlag}`;
+        user['country'] = `${country[0].countryFlag}`;
 
         console.log(user);
         selected.push(user);
       });
       res.send({ ok: true, selected });
-    } else if (type === "mentor") {
+    }
+
+    else if (type === "mentor") {
       let selected = [];
       selectedUsers.forEach((selectedUser) => {
         const mentee = selectedUesrModel.filter(
@@ -186,16 +187,19 @@ export async function getSelectedUser(req, res) {
         const country = flags.filter(
           (country) => country.countryName === user.country
         );
-        const flag = { countryFlag: `${country[0].countryFlag}` };
-        console.log(user);
         const menteeIntiative = selectedUserInitiatives.filter(
           (selectedMentee) => selectedMentee.ownerUserId === user.id
         );
+        user['country'] = `${country[0].countryFlag}`;
+        user['fieldsOfKnowledge'] = `${menteeIntiative[0].companyName}`;
+        user['sector'] = `${menteeIntiative[0].stage}`
         selected.push(user);
       });
       res.send({ ok: true, selected });
     }
-  } catch (error) {
+  }
+
+  catch (error) {
     console.log(error.error);
     res.send({ error: error.message });
   }
