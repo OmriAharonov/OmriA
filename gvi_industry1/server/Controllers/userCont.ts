@@ -168,10 +168,11 @@ export async function getSelectedUser(req, res) {
         const country = flags.filter(
           (country) => country.countryName === user.country
         );
-          const newUser = {...user,flag:`${country[0].countryFlag}`}
+          // const newUser = {...user,flag:`${country[0].countryFlag}`}
+          user['country'] = `${country[0].countryFlag}`;
 
-        console.log(newUser);
-        selected.push(newUser);
+        console.log(user);
+        selected.push(user);
       });
       res.send({ ok: true, selected });
     } else if (type === "mentor") {
@@ -190,10 +191,6 @@ export async function getSelectedUser(req, res) {
         const menteeIntiative = selectedUserInitiatives.filter(
           (selectedMentee) => selectedMentee.ownerUserId === user.id
         );
-        // const companyName = menteeIntiative[0].companyName;
-        // const stage = menteeIntiative[0].stage;
-        // console.log(companyName,stage);
-        // console.log(companyName);
         selected.push(user);
       });
       res.send({ ok: true, selected });
