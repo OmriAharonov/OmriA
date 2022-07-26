@@ -8,6 +8,7 @@ interface navBarLayoutProps {
 }
 const Layout = (props: navBarLayoutProps) => {
   const { currentUserType, loggedInUser } = props;
+  
   return (
     <>
       <NavBar loggedInUser={loggedInUser} currentUserType={currentUserType} />
