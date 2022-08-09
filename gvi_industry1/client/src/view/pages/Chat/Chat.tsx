@@ -1,10 +1,11 @@
 import {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
-import ChatWindow from './Components/ChatWindow';
-import CurrentRecipient from './Components/CurrentRecipient';
-import SideBar from './Components/SideBar';
+import ChatWindow from './components/ChatWindow';
+import CurrentRecipient from './components/CurrentRecipient';
+import SideBar from './components/SideBar';
 import {socket} from '../../../index';
 import {ChatProvider} from '../../Contexts/ChatContext';
+import e from 'express';
 export interface nameInterface {
     first: string;
     last: string;
@@ -12,16 +13,18 @@ export interface nameInterface {
 export interface MessageUserInterface {
     userId: String;
     name: nameInterface;
+    image?: String;
 }
 export interface UserInterface {
     _id: String;
     name: nameInterface;
+    image?: String;
 }
 export interface MessageInterface {
     _id?: String;
     sender?: MessageUserInterface;
     recipient?: MessageUserInterface;
-    text?: String;
+    text?: string;
     file?: String;
     time?: String;
 }
@@ -37,9 +40,10 @@ function Chat() {
     const [recipient, setRecipient] = useState<any>({_id: '1', name: {first: 'a', last: 'a'}});
     const [sender, setSender] = useState<MessageUserInterface>({userId: '', name: {first: '', last: ''}});
     const [userList, setUserList] = useState<Array<any>>([]);
-    const [searchMessagesToggle, setSearchMessagesToggle] = useState<boolean>(false);
+    const [searchTerm, setSearchTerm] = useState<String>('');
     const SelectedRefs: any = useRef([]);
     const messageListRef = useRef<HTMLUListElement>(null);
+    const messageInputRef = useRef<any>(null);
 
     SelectedRefs.current = [];
     const addToRefs = (el: any) => {
@@ -118,11 +122,15 @@ function Chat() {
         };
     }, [recipient]);
 
-    function handleChatSearchBar() {
-        setSearchMessagesToggle((p: boolean) => !p);
+    function handleChatSearchBar(ev:any) {
+
+        setSearchTerm(ev.target.value);
+
     }
-    async function handleSendMessage() {
+
+    async function handleSendMessage(e:any) {
         try {
+            e.preventDefault();
             let id: any = recipient?._id;
 
             if (!id) {
@@ -157,8 +165,8 @@ function Chat() {
                 recipient: recipient,
                 file: '',
             };
-            // setSentMessage('')
             socket.emit('send-message', payload);
+return setSentMessage('')
         } catch (error) {
             console.log(error);
         }
@@ -202,7 +210,7 @@ function Chat() {
     }
     return (
         <div className='chat'>
-            <ChatProvider value={{setSentFile, sender, handleSendMessage,messageListRef,handleTabChange,addToRefs, messageList, setRecipient,dateFromObjectId,sentMessage, setSentMessage, recipient, chatArea, handleChatSearchBar, searchMessagesToggle, userList}}>
+            <ChatProvider value={{setMessageList, searchTerm, messageInputRef,setSentFile, sender, handleSendMessage,messageListRef,handleTabChange,addToRefs, messageList, setRecipient,dateFromObjectId,sentMessage, setSentMessage, recipient, chatArea, handleChatSearchBar, userList}}>
                 <SideBar/>
                 {recipient ? <CurrentRecipient /> : null}
                 <ChatWindow />

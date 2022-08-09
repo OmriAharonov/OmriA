@@ -28,6 +28,7 @@ function RecipientCard(props: RecipientCardProps) {
         return newMessageList[newMessageList.length - 1];
     };
     useEffect(() => {
+        
         (async () => {
             setLastMessage(await makeRecLastMessage());
         })();
@@ -41,7 +42,7 @@ function RecipientCard(props: RecipientCardProps) {
             onClick={() => {
                 setRecipient(user);
             }}>
-            <Avatar sx={{width: 56, height: 56}}>{initial}</Avatar>
+            <Avatar sx={{width: 56, height: 56}}>{user.image ? <img className="recipient_image" src={`${user.image}`} alt={`${user.image}`} /> : initial}</Avatar>
             <div className='recipient_text'>
                 <h2 className='recipient_text_name'>
                     {user.name.first} {user.name.last}

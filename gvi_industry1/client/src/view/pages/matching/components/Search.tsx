@@ -1,34 +1,67 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 interface MatchingProps {
-  currentSearch: Array<string>;
-  setCurrentSearch: Function;
+  setUsersList: Function;
+  currentUser: any;
+  setCurrentUser: Function;
 }
 
 const Search = (props: MatchingProps) => {
-  const { currentSearch, setCurrentSearch } = props;
+  const { setUsersList, currentUser, setCurrentUser } = props;
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get("/api/users/get-user");
+      const { user } = data;
+      setCurrentUser(user);
+    })();
+  }, []);
+
+  async function getAllUsers() {
+    const { data } = await axios.post("/api/users/get-users", { currentUser });
+    const { filterUsers } = data;
+    console.log(filterUsers);
+
+    setUsersList(filterUsers);
+  }
 
   async function getSearchResults(ev: any) {
     const currentSearch = ev.target.value;
     console.log(currentSearch);
-
-      const { data } = await axios.post("/api/users/get-search", {
-        currentSearch,
-      });
+    if (currentSearch === "") {
+      console.log("empty");
+      getAllUsers();
+     
+    }
+    else {
+      const { data } = await axios.post("/api/users/get-search", { currentSearch, });
       const { allSearches } = data;
       console.log(allSearches);
-      setCurrentSearch(allSearches);
-
-    
+      setUsersList(allSearches);
+    }
   }
   return (
-    <div className={"matching__search"}>
-      <input type="text" name="inputText" onChange={getSearchResults} />
-      <button>search</button>
+    <div className="matching__search">
+      <h2>Entrepreneur Matching</h2>
+      <h3 className="matching__title">
+        Matchings that are appropriate for you
+      </h3>
+
+      <input
+        className="matching__search_input"
+        type="text"
+        name="inputText"
+        onChange={getSearchResults}
+        placeholder="Type full name..."
+      />
+
+      {/* <button>search</button> */}
       {/* {currentSearch.map((search: any) => {
         return <h2>country:{search.country}</h2>;
       })} */}
+      <Link className="matching__search_link" to="selected-users">Selected Entrepreneur</Link>
     </div>
   );
 };
